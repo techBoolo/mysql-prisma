@@ -3,13 +3,40 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const user = await prisma.user.findFirst({
-    where: { id: 1},
+  const users = await fetchUsers()
+  console.dir(users, { depth: null });
+}
+
+async function createUser(userData) {
+  const response = await prisma.user.create({
+    data: userData
+  })
+  return response
+}
+
+async function fetchUsers() {
+  const users = await prisma.user.findMany({
     include: {
       posts: true
     }
   })
-  console.dir(user, { depth: null });
+  return users
+}
+
+async function findUserById(id) {
+  const user = await prisma.user.findFirst({
+    where: { id },
+    include: {
+      posts: true
+    }
+  })
+  return user
+}
+
+async function deleteUser(id){
+  const response = await prisma.user.delete({
+    where: { id }
+  })
 }
 
 main()
