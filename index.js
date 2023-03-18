@@ -3,8 +3,19 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const users = await fetchUsers()
+  const users = await anyOp()
   console.dir(users, { depth: null });
+}
+
+async function anyOp() {
+  return await prisma.user.findMany({
+    where: {
+      OR: [
+        { name: { startsWith: 'userx' }},
+        { AND: [{ name: { endsWith: '2' }}, { id: 2}]}
+      ]
+    }
+  })
 }
 
 async function createUser(userData) {

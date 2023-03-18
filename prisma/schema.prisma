@@ -11,7 +11,7 @@ generator client {
 // check the doc for mongodb
 
 // shadow db is incase the user does not have database create access
-// in that case we can define a db the use can access as a shadow
+// in that case we can define a db the user can access as a shadow
 
 datasource db {
   provider = "mysql"
